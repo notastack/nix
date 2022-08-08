@@ -19,6 +19,7 @@
   boot.loader.grub = {
 	configurationLimit = 5;
 };
+  boot.kernelParams = [ "psmouse.synaptics_intertouch=0" ];
 
   # Setup keyfile
   boot.initrd.secrets = {
@@ -68,6 +69,7 @@ services.xserver.desktopManager.gnome.extraGSettingsOverrides = ''
     layout = "us";
     xkbVariant = "";
   };
+  feh --bg-fill "/etc/nixos/wallaper.png"
 
   # Enable CUPS to print documents.
   services.printing.enable = true;
@@ -191,10 +193,8 @@ services.xserver.desktopManager.gnome.extraGSettingsOverrides = ''
 ];
 
 environment.interactiveShellInit = ''
-    alias ls = 'ls --color=auto'
     #alias dir='dir --color=auto'
     #alias vdir='vdir --color=auto'
-
     alias grep='grep --color=auto'
     alias fgrep='fgrep --color=auto'
     alias egrep='egrep --color=auto'
@@ -263,10 +263,6 @@ alias .2='cd ../..'
 alias .3='cd ../../..'
 alias .4='cd ../../../..'
 alias .5='cd ../../../../..'
-alias cd../..='cd ../..'
-alias cd../../..='cd ../../..'
-alias cd../../../..='cd ../../../..'
-alias cd../../../../..='cd ../../../../..'
 alias cp='echo jeffreyepstein ; sudo cp -d -r'
 alias mkdir='mkdir -v'
 alias mkcd='mkdircd(){ mkdir $1; cd $1; }; mkdircd'
@@ -464,6 +460,7 @@ done'
   # services.openssh.enable = true;
 
   virtualisation.docker.enable = true;
+  services.dbus.packages = with pkgs; [ gnome3.dconf ];
 
   # Open ports in the firewall.
   # networking.firewall.allowedTCPPorts = [ ... ];
