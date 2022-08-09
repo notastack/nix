@@ -69,7 +69,6 @@ services.xserver.desktopManager.gnome.extraGSettingsOverrides = ''
     layout = "us";
     xkbVariant = "";
   };
-  feh --bg-fill "/etc/nixos/wallaper.png"
 
   # Enable CUPS to print documents.
   services.printing.enable = true;
@@ -149,6 +148,8 @@ services.xserver.desktopManager.gnome.extraGSettingsOverrides = ''
 	electron
 	git
 	go
+	cmake
+	ekam
 #infra-as-code
 	docker
 	docker-compose
@@ -184,6 +185,7 @@ services.xserver.desktopManager.gnome.extraGSettingsOverrides = ''
 	tor
 	tor-browser-bundle-bin
 	wireguard-go
+	openvpn
 #files
 	zip
 	unzip
@@ -269,7 +271,7 @@ alias mkcd='mkdircd(){ mkdir $1; cd $1; }; mkdircd'
 alias cdls='cdls(){ cd $1; ls; }; cdls'
 alias cdrm='cdrm(){ cd ..; rm $1; }; cdrm'
 alias catg='catg(){ cat $1 | grep $2; }; catg'
-alias bak='backup(){ cp $1 "$1".bak }; backup'
+alias bak='backup(){ cp $1 $1.bak }; backup'
 alias snipe='snipe(){ savepoint ; cd $1 ; rm $2 ; returnsave }; smipe'
 alias cx='chmod +x'
 alias rm='sudo rm -I -v -d -r'
@@ -332,6 +334,9 @@ alias kn="kubectl get nodes"
 alias kpv="kubectl get pv"
 alias kpvc="kubectl get pvc"
 
+#nix
+alias nixe="sudo vim /etc/nixos/configuration.nix"
+alias nixs="sudo nixos-rebuild switch"
 
 # fun
 alias unix='cowsay -f gnu "Unix is love, Unix is life" | lolcat'
@@ -460,7 +465,6 @@ done'
   # services.openssh.enable = true;
 
   virtualisation.docker.enable = true;
-  services.dbus.packages = with pkgs; [ gnome3.dconf ];
 
   # Open ports in the firewall.
   # networking.firewall.allowedTCPPorts = [ ... ];
