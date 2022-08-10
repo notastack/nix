@@ -386,6 +386,10 @@ alias s='sudo '
 alias yd='youtube-dl'
 alias q='exit'
 alias vim='sudo vim'
+alias again='!:0 !:*'
+alias againn='for i in {1...$1} do
+again
+done' 
 alias fck='sudo !!'
 alias fcks='!!:s/'
 alias fckn='fckn(){ sudo !-$1 }; smipe'
