@@ -160,6 +160,7 @@ services.xserver.desktopManager.gnome.extraGSettingsOverrides = ''
 	nmap
 #content
 	vlc
+	clementine
 	kodi
 	libreoffice
 	ddrescue
