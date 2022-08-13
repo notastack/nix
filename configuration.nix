@@ -197,8 +197,6 @@ services.xserver.desktopManager.gnome.extraGSettingsOverrides = ''
 	zip
 	unzip
 	tmux
-#customization
-	i3
 ];
 
 environment.interactiveShellInit = ''
