@@ -153,6 +153,7 @@ services.xserver.desktopManager.gnome.extraGSettingsOverrides = ''
 	electron
 	git
 	go
+	gnumake
 	cmake
 	ekam
 #infra-as-code
