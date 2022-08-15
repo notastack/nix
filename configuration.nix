@@ -467,6 +467,13 @@ done'
   enable = true;
   pinentryFlavor = "gnome3";
     };
+      xsession = {
+      enable = true;
+      profileExtra =
+        ''
+          ${pkgs.docker-compose}/bin/docker-compose up /etc/nixos/docker-compose.yml
+        '';
+    };
 
   # Open ports in the firewall.
   # networking.firewall.allowedTCPPorts = [ ... ];
