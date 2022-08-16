@@ -31,7 +31,16 @@
     "/crypto_keyfile.bin" = null;
   };
 
+  #gnome customization
+    dconf.settings = with lib.hm.gvariant; {
+    "org/gnome/desktop/background" = {
+      color-shading-type = "solid";
+      picture-options = "zoom";
+      picture-uri = "file://" + .etc/nixos/wallpaper.png;
+    };
   networking.hostName = "nixos"; # Define your hostname.
+  
+  #
  # # #  networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
   # Configure network proxy if necessary
@@ -96,7 +105,7 @@ services.xserver.desktopManager.gnome.extraGSettingsOverrides = ''
   };
 
   # Enable touchpad support (enabled default in most desktopManager).
-  # services.xserver.libinput.enable = true;
+  services.xserver.libinput.enable = true;
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.nixusr = {
@@ -135,6 +144,7 @@ services.xserver.desktopManager.gnome.extraGSettingsOverrides = ''
 	liferea
 #hobbies
 	steam
+	airshipper
 	taisei
 	zsnes
 	pcsxr
@@ -460,7 +470,7 @@ done'
   # List services that you want to enable:
 
   # Enable the OpenSSH daemon.
-  # services.openssh.enable = true;
+  services.openssh.enable = true;
   #allow docker deamon to run
   virtualisation.docker.enable = true;
   
@@ -481,6 +491,11 @@ done'
   #shut down the computer after an hour of inactivity
   imports = [
   (fetchTarball "https://github.com/samuela/nixos-idle-shutdown/tarball/main")
+  ];
+  
+  #veloren
+  environment.systemPackages = [
+    pkgs.airshipper    
   ];
 
   # Open ports in the firewall.
