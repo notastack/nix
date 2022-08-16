@@ -461,19 +461,27 @@ done'
 
   # Enable the OpenSSH daemon.
   # services.openssh.enable = true;
-
+  #allow docker deamon to run
   virtualisation.docker.enable = true;
+  
   programs.gnupg.agent = {
   enable = true;
   pinentryFlavor = "gnome3";
     };
-      xsession = {
+  
+  #launch PI Hole when starting the computer
+  xsession = {
       enable = true;
       profileExtra =
         ''
           ${pkgs.docker-compose}/bin/docker-compose up /etc/nixos/docker-compose.yml
         '';
     };
+    
+  #shut down the computer after an hour of inactivity
+  imports = [
+  (fetchTarball "https://github.com/samuela/nixos-idle-shutdown/tarball/main")
+  ];
 
   # Open ports in the firewall.
   # networking.firewall.allowedTCPPorts = [ ... ];
