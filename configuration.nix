@@ -163,6 +163,7 @@ services.xserver.desktopManager.gnome.extraGSettingsOverrides = ''
 	electron
 	git
 	go
+	python
 	gnumake
 	cmake
 	ekam
@@ -192,7 +193,7 @@ services.xserver.desktopManager.gnome.extraGSettingsOverrides = ''
 	bacula
 	veracrypt
 	keepass
-    pass
+	pass
 	clamav
 #hacking
 	burpsuite
@@ -457,6 +458,8 @@ alias fizzbuzz='for i in {1..100}; do
     
     three=""
 done'
+
+alias neofetch
 '';
 
   # Some programs need SUID wrappers, can be configured further or are
