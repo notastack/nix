@@ -349,6 +349,7 @@ alias nixe="sudo vim /etc/nixos/configuration.nix"
 alias nixs="sudo nixos-rebuild switch"
 alias nixwtf="man configuration.nix"
 alias nixmaj="sudo nix upgrade-nix"
+alias nixq='nix-env -q'
 # fun
 alias unix='cowsay -f gnu "Unix is love, Unix is life" | lolcat'
 alias apple='cowsay -f sheep "I love macos" | lolcat'
