@@ -212,13 +212,17 @@ services.xserver.desktopManager.gnome.extraGSettingsOverrides = ''
 ];
 
 environment.interactiveShellInit = ''
+
+#default
 #alias dir='dir --color=auto'
 #alias vdir='vdir --color=auto'
 alias grep='grep --color=auto'
 alias fgrep='fgrep --color=auto'
 alias egrep='egrep --color=auto'
+
 # colored GCC warnings and errors
 #export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
+
 # some more ls aliases
 alias ll='ls -alF'
 alias la='ls -A'
@@ -230,6 +234,7 @@ alias lsl='ls -lhFA | less'
 alias lsu='lsusb'
 alias udev='udevadm monitor --udev'
 alias lsd='ls | lolcat'
+
 # network
 alias gg='ping google.com'
 alias localhost='w3m localhost'
@@ -255,6 +260,7 @@ alias torrest='systemctl restart tor.service'
 alias serve='python -m SimpleHTTPServer'
 alias ports='sudo netstat -tulanp'
 alias sshweb='ssh root@lesueurclement.com'
+
 # files
 alias savepoint='pwd > ~/.path && echo path saved to $(pwd)'
 alias returnsave='cd $(cat ~/.path) && echo path returned to $(pwd)'
@@ -303,6 +309,7 @@ echo "$1 created"
 fi'
 alias mv='mv -f -v'
 alias whereami='pwd'
+
 # docker
 alias docekr='sudo docker'
 alias dockr='sudo docker'
@@ -327,6 +334,7 @@ alias dkd="sudo docker run -d -P"
 alias dki="sudo docker run -i -t -P"
 alias dex="sudo docker exec -i -t"
 alias drmf='sudo docker stop $(sudo docker ps -a -q) && sudo docker rm $(sudo docker ps -a -q)'
+
 #kubernetes
 alias k="kubectl"
 alias ka="kubectl apply -f"
@@ -344,12 +352,15 @@ alias klo="kubectl logs -f"
 alias kn="kubectl get nodes"
 alias kpv="kubectl get pv"
 alias kpvc="kubectl get pvc"
+
 #nix
 alias nixe="sudo vim /etc/nixos/configuration.nix"
 alias nixs="sudo nixos-rebuild switch"
 alias nixwtf="man configuration.nix"
 alias nixmaj="sudo nix upgrade-nix"
 alias nixq='nix-env -q'
+alias nixh='nix help'
+
 # fun
 alias unix='cowsay -f gnu "Unix is love, Unix is life" | lolcat'
 alias apple='cowsay -f sheep "I love macos" | lolcat'
@@ -370,6 +381,7 @@ alias nethack='telnet nethack.alt.org'
 alias lol='tableflip ; tabledown'
 alias funky='funky(){ echo $1 | lolcat }; funky'
 alias dealwithit="echo '(•_•)' ; echo '( •_•)>⌐■-■' ; echo '(⌐■_■)' ; sleep 1 ; echo '(▀̿Ĺ̯▀̿ ̿)'"
+
 # simplify
 alias sd='sudo'
 alias cls='clear'
@@ -404,6 +416,7 @@ done'
 alias fck='sudo !!'
 alias fcks='!!:s/'
 alias fckn='fckn(){ sudo !-$1 }; smipe'
+
 # troubleshoot
 alias hisg='history | grep'
 alias aliase='vim ~/.bashrc'
@@ -414,6 +427,7 @@ alias hisv='vim ~/.bash_history'
 alias crone='sudo vim /etc/crontab'
 alias totalusage='df -hl --total | grep total'
 alias most='du -hsx * | sort -rh | head -10'
+
 # video
 alias listvideos='ls | egrep -i $VIDEO_TYPE | sort -h'
 alias listvideosR='find . | egrep -i $VIDEO_TYPE | sort -h'
@@ -421,6 +435,7 @@ alias playvideos='listvideos | xargs -d "\n" mpv'
 alias playvideosr='listvideos | sort -R | xargs -d "\n" mpv'
 alias playvideosR='listvideosR | xargs -d "\n" mpv'
 alias playvideosRr='listvideosR| sort -R | xargs -d "\n" mpv'
+
 # git
 alias gap='git add --patch'
 alias gd='git diff'
@@ -430,12 +445,14 @@ alias gco='git commit'
 alias gp='git push'
 alias gb='git branch'
 alias gs='git status'
+
 #everyday stuff
 alias now='date +"%T"'
 alias nowtime=now
 alias nowdate='date +"%d-%m-%Y"'
 alias spa='/home/workpad/spa/SPA/spa.sh'
 alias bashv='bash --version'
+
 # interview question
 alias fizzbuzz='for i in {1..100}; do
     echo -n "$i"
