@@ -195,6 +195,7 @@ services.xserver.desktopManager.gnome.extraGSettingsOverrides = ''
 	keepass
 	pass
 	clamav
+        Vault 
 #hacking
 	burpsuite
 	metasploit
