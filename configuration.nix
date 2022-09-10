@@ -3,19 +3,15 @@
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
 { config, pkgs, ... }:
-{
-   nix.extraOptions = ''
-      experimental-features = nix-command
-   '';
-   }
 
 {
   imports =
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
-    ];
+  ];
 
   # Bootloader.
+  boot.loader.systemd-boot.configurationLimit = 5;
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi = {
 	canTouchEfiVariables = true;
@@ -24,20 +20,35 @@
   boot.loader.grub = {
 	configurationLimit = 5;
 };
-  boot.kernelParams = [ "psmouse.synaptics_intertouch=0" ];
+# tell kernel to use SE Linux
+# boot.kernelParams = [ "security=selinux" ];
+# compile kernel with SE Linux support - but also support for other LSM modules
+# boot.kernelPatches = [ {
+#       name = "selinux-config";
+#       patch = null;
+#       extraConfig = 
+ #              SECURITY_SELINUX y
+  #             SECURITY_SELINUX_BOOTPARAM n
+   #            SECURITY_SELINUX_DISABLE n
+    #           SECURITY_SELINUX_DEVELOP y
+     #          SECURITY_SELINUX_AVC_STATS y
+      #         SECURITY_SELINUX_CHECKREQPROT_VALUE 0
+       #        DEFAULT_SECURITY_SELINUX n
+        #     ;
+ #      } ];
+# build systemd with SE Linux support so it loads policy at boot and supports file labelling
+#systemd.package = pkgs.systemd.override { withSelinux = true; };
+  
+#  programs.gnupg.agent = {
+#  enable = true;
+#  pinentryFlavor = "gnome3";
+#    };
 
   # Setup keyfile
   boot.initrd.secrets = {
     "/crypto_keyfile.bin" = null;
   };
 
-  #gnome customization
-    dconf.settings = with lib.hm.gvariant; {
-    "org/gnome/desktop/background" = {
-      color-shading-type = "solid";
-      picture-options = "zoom";
-      picture-uri = "file://" + .etc/nixos/wallpaper.png;
-    };
   networking.hostName = "nixos"; # Define your hostname.
   
   #
@@ -107,17 +118,6 @@ services.xserver.desktopManager.gnome.extraGSettingsOverrides = ''
   # Enable touchpad support (enabled default in most desktopManager).
   services.xserver.libinput.enable = true;
 
-  # Define a user account. Don't forget to set a password with ‘passwd’.
-  users.users.nixusr = {
-    isNormalUser = true;
-    description = "nixusr";
-    extraGroups = [ "networkmanager" "wheel" ];
-    packages = with pkgs; [
-      firefox
-    #  thunderbird
-    ];
-  };
-
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
   programs.steam = {
@@ -125,32 +125,56 @@ services.xserver.desktopManager.gnome.extraGSettingsOverrides = ''
     remotePlay.openFirewall = true; # Open ports in the firewall for Steam Remote Play
     dedicatedServer.openFirewall = true; # Open ports in the firewall for Source Dedicated Server
   };
-
-  # List packages installed in system profile. To search, run:
-  # $ nix search wget
-  environment.systemPackages = with pkgs; [
- #terminal 
+  
+  # Define a user account. Don't forget to set a password with ‘passwd’.
+  users.users.nixusr = {
+    isNormalUser = true;
+    description = "nixusr";
+    extraGroups = [ "networkmanager" "wheel" ];
+    packages = with pkgs; [
+#terminal 
 	vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
-  	wget
+  wget
 	gotop
 	apg
 	openssl
 	lf
 	tree
-#internet
-	chromium
-	librewolf	
-	w3m
-	liferea
-#hobbies
-	steam
-	airshipper
-	taisei
-	zsnes
-	pcsxr
-	pcsx2
-	hakuneko
-#fun
+	zsh
+#creativity
+	noisetorch
+	lmms
+	krita
+	obs-studio
+	kdenlive
+	librecad
+	gnome.gnome-tweaks
+#security
+	bacula
+	veracrypt
+	keepass
+	pass
+	clamav
+	policycoreutils
+	vault
+#hacking
+	burpsuite
+	metasploit
+	john
+	wifite2
+#privacy
+	tor
+	tor-browser-bundle-bin
+	wireguard-go
+	openvpn
+#files
+	zip
+	unzip
+	tmux
+#customization
+	pkgs.ly
+	rofi
+  #fun
 	neofetch
 	sl
 	cowsay
@@ -175,41 +199,45 @@ services.xserver.desktopManager.gnome.extraGSettingsOverrides = ''
 #network
 	wireshark
 	nmap
+#internet
+	chromium
+	librewolf	
+	w3m
+	liferea
+    ];
+  };
+
+    # Define a user account. Don't forget to set a password with ‘passwd’.
+  users.users.nixguest = {
+    isNormalUser = true;
+    description = "nixguest";
+    extraGroups = [ "networkmanager" "wheel" ];
+    packages = with pkgs; [
+      firefox
+      google-chrome
+    ];
+  };
+
+  # List packages installed in system profile. To search, run:
+  # $ nix search wget
+  environment.systemPackages = with pkgs; [
+#hobbies
+	steam
+	airshipper
+	taisei
+	zsnes
+	pcsxr
+	pcsx2
+	hakuneko
+	dwarf-fortress
+	starsector
+	xonotic-sdl
 #content
 	vlc
 	clementine
 	kodi
 	libreoffice
 	ddrescue
-#creativity
-	noisetorch
-	lmms
-	krita
-	obs-studio
-	kdenlive
-	librecad
-	gnome.gnome-tweaks
-#security
-	bacula
-	veracrypt
-	keepass
-	pass
-	clamav
-        Vault 
-#hacking
-	burpsuite
-	metasploit
-	john
-	wifite2
-#privacy
-	tor
-	tor-browser-bundle-bin
-	wireguard-go
-	openvpn
-#files
-	zip
-	unzip
-	tmux
 ];
 
 environment.interactiveShellInit = ''
@@ -291,7 +319,7 @@ alias mkcd='mkdircd(){ mkdir $1; cd $1; }; mkdircd'
 alias cdls='cdls(){ cd $1; ls; }; cdls'
 alias cdrm='cdrm(){ cd ..; rm $1; }; cdrm'
 alias catg='catg(){ cat $1 | grep $2; }; catg'
-alias bak='backup(){ cp $1 $1.bak }; backup'
+alias bak='backup(){ cp $1 ./$1.bak }; backup'
 alias snipe='snipe(){ savepoint ; cd $1 ; rm $2 ; returnsave }; smipe'
 alias cx='chmod +x'
 alias rm='sudo rm -I -v -d -r'
@@ -335,6 +363,7 @@ alias dkd="sudo docker run -d -P"
 alias dki="sudo docker run -i -t -P"
 alias dex="sudo docker exec -i -t"
 alias drmf='sudo docker stop $(sudo docker ps -a -q) && sudo docker rm $(sudo docker ps -a -q)'
+alias dockrm='docker ps -q | sudo xargs docker stop ; docker ps -q | sudo xargs docker rm'
 
 #kubernetes
 alias k="kubectl"
@@ -361,6 +390,9 @@ alias nixwtf="man configuration.nix"
 alias nixmaj="sudo nix upgrade-nix"
 alias nixq='nix-env -q'
 alias nixh='nix help'
+alias nixc='nix-collect-garbage'
+alias nixr='sudo nixos-rebuild switch --rollback'
+alias nixt='sudo nixos-rebuild test'
 
 # fun
 alias unix='cowsay -f gnu "Unix is love, Unix is life" | lolcat'
@@ -478,7 +510,6 @@ alias fizzbuzz='for i in {1..100}; do
     three=""
 done'
 
-alias neofetch
 '';
 
   # Some programs need SUID wrappers, can be configured further or are
@@ -496,30 +527,15 @@ alias neofetch
   #allow docker deamon to run
   virtualisation.docker.enable = true;
   
-  programs.gnupg.agent = {
-  enable = true;
-  pinentryFlavor = "gnome3";
-    };
-  
   #launch PI Hole when starting the computer
-  xsession = {
-      enable = true;
-      profileExtra =
-        ''
-          ${pkgs.docker-compose}/bin/docker-compose up /etc/nixos/docker-compose.yml
-        '';
-    };
+  #xsession = {
+  #    enable = true;
+  #    profileExtra =
+  #      ''
+  #        ${pkgs.docker-compose}/bin/docker-compose up /etc/nixos/docker-compose.yml
+  #      '';
+  #  };
     
-  #shut down the computer after an hour of inactivity
-  imports = [
-  (fetchTarball "https://github.com/samuela/nixos-idle-shutdown/tarball/main")
-  ];
-  
-  #veloren
-  environment.systemPackages = [
-    pkgs.airshipper    
-  ];
-
   # Open ports in the firewall.
   # networking.firewall.allowedTCPPorts = [ ... ];
   # networking.firewall.allowedUDPPorts = [ ... ];
@@ -532,6 +548,7 @@ alias neofetch
   # this value at the release version of the first install of this system.
   # Before changing this value read the documentation for this option
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
-  system.stateVersion = "22.05"; # Did you read the comment?
+  system.stateVersion = "22.05";
 
 }
+
