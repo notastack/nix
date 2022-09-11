@@ -191,6 +191,7 @@ services.xserver.desktopManager.gnome.extraGSettingsOverrides = ''
 	gnumake
 	cmake
 	ekam
+	pkgs.android-studio
 #infra-as-code
 	docker
 	docker-compose
@@ -211,7 +212,7 @@ services.xserver.desktopManager.gnome.extraGSettingsOverrides = ''
   users.users.nixguest = {
     isNormalUser = true;
     description = "nixguest";
-    extraGroups = [ "networkmanager" "wheel" ];
+    extraGroups = [];
     packages = with pkgs; [
       firefox
       google-chrome
@@ -221,6 +222,7 @@ services.xserver.desktopManager.gnome.extraGSettingsOverrides = ''
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
+
 #hobbies
 	steam
 	airshipper
@@ -232,6 +234,9 @@ services.xserver.desktopManager.gnome.extraGSettingsOverrides = ''
 	dwarf-fortress
 	starsector
 	xonotic-sdl
+	pkgs.superTux
+	pkgs.superTuxKart
+	pkgs.minetest
 #content
 	vlc
 	clementine
@@ -393,6 +398,7 @@ alias nixh='nix help'
 alias nixc='nix-collect-garbage'
 alias nixr='sudo nixos-rebuild switch --rollback'
 alias nixt='sudo nixos-rebuild test'
+alias nixread='cat /etc/nixos/configuration.nix'
 
 # fun
 alias unix='cowsay -f gnu "Unix is love, Unix is life" | lolcat'
@@ -526,7 +532,7 @@ done'
   services.openssh.enable = true;
   #allow docker deamon to run
   virtualisation.docker.enable = true;
-  
+ 
   #launch PI Hole when starting the computer
   #xsession = {
   #    enable = true;
@@ -551,4 +557,5 @@ done'
   system.stateVersion = "22.05";
 
 }
+
 
