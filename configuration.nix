@@ -157,6 +157,7 @@ services.xserver.desktopManager.gnome.extraGSettingsOverrides = ''
 	clamav
 	policycoreutils
 	vault
+	pkgs.apg
 #hacking
 	burpsuite
 	metasploit
@@ -225,6 +226,7 @@ services.xserver.desktopManager.gnome.extraGSettingsOverrides = ''
 
 #hobbies
 	steam
+	pkgs.steam-tui
 	airshipper
 	taisei
 	zsnes
