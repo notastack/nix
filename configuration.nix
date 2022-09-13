@@ -401,6 +401,7 @@ alias nixc='nix-collect-garbage'
 alias nixr='sudo nixos-rebuild switch --rollback'
 alias nixt='sudo nixos-rebuild test'
 alias nixread='cat /etc/nixos/configuration.nix'
+alias nixst='nix-store'
 
 # fun
 alias unix='cowsay -f gnu "Unix is love, Unix is life" | lolcat'
