@@ -208,6 +208,66 @@ services.xserver.desktopManager.gnome.extraGSettingsOverrides = ''
 	liferea
     ];
   };
+  
+    # Define a user account. Don't forget to set a password with ‘passwd’.
+  users.users.nixwork = {
+    isNormalUser = true;
+    description = "nixwork";
+    extraGroups = [ "networkmanager" "wheel" ];
+    packages = with pkgs; [
+#terminal 
+	vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
+  	wget
+	gotop
+	openssl
+	lf
+#creativity
+	noisetorch
+	krita
+	obs-studio
+	librecad
+#security
+	bacula
+	veracrypt
+	keepass
+	pass
+	clamav
+	policycoreutils
+	vault
+#hacking
+	burpsuite
+	metasploit
+	john
+	wifite2
+#files
+	zip
+	unzip
+	tmux
+#programing
+	vscode
+	notepad-next
+	electron
+	git
+	go
+	python
+	gnumake
+	cmake
+	ekam
+	pkgs.android-studio
+#infra-as-code
+	docker
+	docker-compose
+	ansible
+	terraform
+#network
+	wireshark
+	nmap
+	wireguard-go
+	openvpn
+#internet
+	chromium	
+    ];
+  };
 
     # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.nixguest = {
