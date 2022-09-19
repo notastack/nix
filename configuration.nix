@@ -266,6 +266,9 @@ services.xserver.desktopManager.gnome.extraGSettingsOverrides = ''
 	openvpn
 #internet
 	chromium	
+#communication
+	pkgs.slack
+	pkgs.teams
     ];
   };
 
