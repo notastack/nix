@@ -280,12 +280,6 @@ services.xserver.desktopManager.gnome.extraGSettingsOverrides = ''
     packages = with pkgs; [
       firefox
       google-chrome
-    ];
-  };
-
-  # List packages installed in system profile. To search, run:
-  # $ nix search wget
-  environment.systemPackages = with pkgs; [
 
 #hobbies
 	steam
@@ -302,6 +296,12 @@ services.xserver.desktopManager.gnome.extraGSettingsOverrides = ''
 	pkgs.superTux
 	pkgs.superTuxKart
 	pkgs.minetest
+    ];
+  };
+
+  # List packages installed in system profile. To search, run:
+  # $ nix search wget
+  environment.systemPackages = with pkgs; [
 #content
 	vlc
 	clementine
