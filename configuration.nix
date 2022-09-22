@@ -134,7 +134,7 @@ services.xserver.desktopManager.gnome.extraGSettingsOverrides = ''
     packages = with pkgs; [
 #terminal 
 	vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
-  wget
+	wget
 	gotop
 	apg
 	openssl
