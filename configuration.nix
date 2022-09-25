@@ -133,7 +133,7 @@ services.xserver.desktopManager.gnome.extraGSettingsOverrides = ''
     extraGroups = [ "networkmanager" "wheel" ];
     packages = with pkgs; [
 #terminal 
-	vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
+	vim
 	wget
 	gotop
 	apg
@@ -216,7 +216,7 @@ services.xserver.desktopManager.gnome.extraGSettingsOverrides = ''
     extraGroups = [ "networkmanager" "wheel" ];
     packages = with pkgs; [
 #terminal 
-	vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
+	vim
   	wget
 	gotop
 	openssl
