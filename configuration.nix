@@ -149,6 +149,7 @@ services.xserver.desktopManager.gnome.extraGSettingsOverrides = ''
 	kdenlive
 	librecad
 	gnome.gnome-tweaks
+        pkgs.alda
 #security
 	bacula
 	veracrypt
