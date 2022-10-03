@@ -149,7 +149,6 @@ services.xserver.desktopManager.gnome.extraGSettingsOverrides = ''
 	kdenlive
 	librecad
 	gnome.gnome-tweaks
-        pkgs.alda
 	pkgs.chuck
 #security
 	bacula
